@@ -6337,6 +6337,36 @@ import { VolumeTwotone } from "./components/volume";
 import { variants as variantsWalletAdd2 } from "./components/wallet-add-2";
 import { WalletAdd2Twotone } from "./components/wallet-add-2";
 
+// New social media and utility icons
+import { variants as variantsGithub } from "./components/github";
+import { GithubLinear } from "./components/github";
+import { GithubBold } from "./components/github";
+import { GithubBulk } from "./components/github";
+import { variants as variantsNewTwitter } from "./components/new-twitter";
+import { NewTwitterLinear } from "./components/new-twitter";
+import { NewTwitterBulk } from "./components/new-twitter";
+import { variants as variantsTwitter } from "./components/twitter";
+import { TwitterLinear } from "./components/twitter";
+import { TwitterBold } from "./components/twitter";
+import { variants as variantsYoutube } from "./components/youtube";
+import { YoutubeLinear } from "./components/youtube";
+import { YoutubeBold } from "./components/youtube";
+import { variants as variantsDiscord } from "./components/discord";
+import { DiscordLinear } from "./components/discord";
+import { DiscordBold } from "./components/discord";
+import { variants as variantsTwitch } from "./components/twitch";
+import { TwitchLinear } from "./components/twitch";
+import { TwitchBold } from "./components/twitch";
+import { variants as variantsMail02 } from "./components/mail-02";
+import { Mail02Linear } from "./components/mail-02";
+import { Mail02Bold } from "./components/mail-02";
+import { variants as variantsCancelCircle } from "./components/cancel-circle";
+import { CancelCircleLinear } from "./components/cancel-circle";
+import { CancelCircleBold } from "./components/cancel-circle";
+import { variants as variantsCheckmarkCircle02 } from "./components/checkmark-circle-02";
+import { CheckmarkCircle02Linear } from "./components/checkmark-circle-02";
+import { CheckmarkCircle02Bold } from "./components/checkmark-circle-02";
+
 export { Icon };
 
 export {
@@ -11733,6 +11763,25 @@ export {
   Icon3Twotone,
   VolumeTwotone,
   WalletAdd2Twotone,
+  GithubLinear,
+  GithubBold,
+  GithubBulk,
+  NewTwitterLinear,
+  NewTwitterBulk,
+  TwitterLinear,
+  TwitterBold,
+  YoutubeLinear,
+  YoutubeBold,
+  DiscordLinear,
+  DiscordBold,
+  TwitchLinear,
+  TwitchBold,
+  Mail02Linear,
+  Mail02Bold,
+  CancelCircleLinear,
+  CancelCircleBold,
+  CheckmarkCircle02Linear,
+  CheckmarkCircle02Bold,
 };
 
 export const icons = [
@@ -16445,5 +16494,50 @@ export const icons = [
     name: "wallet-add-2",
     slug: "wallet-add-2",
     variants: variantsWalletAdd2,
-  }
+  },
+  {
+    name: "github",
+    slug: "github",
+    variants: variantsGithub,
+  },
+  {
+    name: "new-twitter",
+    slug: "new-twitter",
+    variants: variantsNewTwitter,
+  },
+  {
+    name: "twitter",
+    slug: "twitter",
+    variants: variantsTwitter,
+  },
+  {
+    name: "youtube",
+    slug: "youtube",
+    variants: variantsYoutube,
+  },
+  {
+    name: "discord",
+    slug: "discord",
+    variants: variantsDiscord,
+  },
+  {
+    name: "twitch",
+    slug: "twitch",
+    variants: variantsTwitch,
+  },
+  {
+    name: "mail-02",
+    slug: "mail-02",
+    variants: variantsMail02,
+  },
+  {
+    name: "cancel-circle",
+    slug: "cancel-circle",
+    variants: variantsCancelCircle,
+  },
+  {
+    name: "checkmark-circle-02",
+    slug: "checkmark-circle-02",
+    variants: variantsCheckmarkCircle02,
+  },
 ];

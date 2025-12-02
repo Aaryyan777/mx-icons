@@ -1,6 +1,7 @@
 ﻿import { useMemo, useState } from "react";
 import "./App.css";
 import { icons as ICONS } from "./icons";
+import { matchesAlias } from "./icons/aliases";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -8,7 +9,7 @@ function App() {
   const [selectedIcon, setSelectedIcon] = useState(null);
   const [iconSize, setIconSize] = useState(24);
   const [iconColor, setIconColor] = useState("#292D32");
-  const [activeVariant, setActiveVariant] = useState("linear");
+  const [activeVariant, setActiveVariant] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const iconsPerPage = 100;
 
@@ -19,24 +20,40 @@ function App() {
     ICONS.forEach((group) => {
       group.variants?.forEach((v) => variantSet.add(v.variant));
     });
-    return Array.from(variantSet).sort();
+    return ["all", ...Array.from(variantSet).sort()];
   }, []);
 
   // Filter icons by active variant
   const flatIcons = useMemo(() => {
     const list = [];
-    ICONS.forEach((group) => {
-      const variantIcon = group.variants?.find(
-        (v) => v.variant === activeVariant
-      );
-      if (variantIcon) {
-        list.push({
-          groupName: group.name,
-          groupSlug: group.slug,
-          ...variantIcon,
+
+    if (activeVariant === "all") {
+      // Show all variants of all icons
+      ICONS.forEach((group) => {
+        group.variants?.forEach((variantIcon) => {
+          list.push({
+            groupName: group.name,
+            groupSlug: group.slug,
+            ...variantIcon,
+          });
         });
-      }
-    });
+      });
+    } else {
+      // Show only the selected variant
+      ICONS.forEach((group) => {
+        const variantIcon = group.variants?.find(
+          (v) => v.variant === activeVariant
+        );
+        if (variantIcon) {
+          list.push({
+            groupName: group.name,
+            groupSlug: group.slug,
+            ...variantIcon,
+          });
+        }
+      });
+    }
+
     return list;
   }, [activeVariant]);
 
@@ -44,13 +61,21 @@ function App() {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return flatIcons;
-    return flatIcons.filter(
-      (icon) =>
+    return flatIcons.filter((icon) => {
+      const matchesDirectSearch =
         icon.slug?.toLowerCase().includes(q) ||
         icon.componentName?.toLowerCase().includes(q) ||
         icon.groupName?.toLowerCase().includes(q) ||
-        icon.groupSlug?.toLowerCase().includes(q)
-    );
+        icon.groupSlug?.toLowerCase().includes(q);
+
+      // Also check if the search query matches any alias
+      const matchesAliasSearch = matchesAlias(
+        icon.groupSlug || icon.slug || "",
+        q
+      );
+
+      return matchesDirectSearch || matchesAliasSearch;
+    });
   }, [query, flatIcons]);
 
   // Pagination
