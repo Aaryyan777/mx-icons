@@ -1,6 +1,6 @@
 ﻿import { useMemo, useState, useEffect } from "react";
 import "./App.css";
-import { icons as ICONS } from "./icons";
+import { icons as ICONS, CopyLinear, TickCircleLinear } from "./icons";
 import { matchesAlias } from "./icons/aliases";
 
 function App() {
@@ -396,6 +396,22 @@ function App() {
               <div className="modal-code">
                 <h3>How to use</h3>
                 <pre>
+                <button
+                  className={`code-copy-btn ${copiedIcon === "code" ? "copied" : ""}`}
+                  data-tooltip="Copy to clipboard"
+                  onClick={() =>
+                    copyCode(
+                      `import { ${selectedIcon.componentName} } from 'mx-icons'\n\n<${selectedIcon.componentName} size={${iconSize}} color="${iconColor}" />`
+                    )
+                  }
+                  aria-label="Copy code"
+                >
+                  {copiedIcon === "code" ? (
+                    <TickCircleLinear size={16} color={isDarkMode ? "#ffffff" : "#000000"} />
+                  ) : (
+                    <CopyLinear size={16} color={isDarkMode ? "#ffffff" : "#000000"} />
+                  )}
+                </button>
                   <code>
                     <span className="keyword">import</span>
                     <span className="punctuation"> {"{ "}</span>
@@ -424,14 +440,26 @@ function App() {
                   </code>
                 </pre>
                 <button
-                  className="copy-button"
+                  className={`copy-button ${copiedIcon === "code" ? "copied" : ""}`}
                   onClick={() =>
                     copyCode(
                       `import { ${selectedIcon.componentName} } from 'mx-icons'\n\n<${selectedIcon.componentName} size={${iconSize}} color="${iconColor}" />`
                     )
                   }
                 >
-                  {copiedIcon === "code" ? "✓ Copied!" : "Copy Code"}
+                  {copiedIcon === "code" ? (
+                    <>
+                      <TickCircleLinear size={16} color={isDarkMode ? "#ffffff" : "#000000"} />
+                      <span style={{ color: isDarkMode ? '#ffffff' : '#000000' }}>Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <CopyLinear size={16} color={isDarkMode ? "#ffffff" : "#000000"} />
+                      <span style={{ color: isDarkMode ? '#ffffff' : '#000000' }}>
+                        Copy Code
+                      </span>
+                    </>
+                  )}
                 </button>
               </div>
             </div>

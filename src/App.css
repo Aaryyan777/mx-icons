@@ -490,13 +490,14 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(10, 12, 18, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 999;
   padding: 1rem;
   animation: fadeIn 0.2s;
+  inset: 0;
 }
 
 .modal-card {
@@ -510,7 +511,7 @@
   overflow-y: auto;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  animation: slideUp 0.3s;
+  animation: modalEnter 0.18s ease-out;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
 }
@@ -554,8 +555,9 @@
 }
 
 .modal-title {
+  text-align: center;
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--text-color);
   margin: 0 0 1.5rem 0;
   padding-right: 2rem;
@@ -594,7 +596,7 @@
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--secondary-btn-text);
-  display: flex;
+  display: block;
   align-items: center;
   justify-content: space-between;
 }
@@ -665,11 +667,50 @@
 }
 
 .modal-code {
+  position: relative;
   background: var(--bg-muted);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 1.5rem;
 }
+
+.code-copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+
+  transition: all 0.15s ease;
+  z-index: 2;
+}
+
+.code-copy-btn:hover {
+  /* background: rgba(255, 255, 255, 0.12); */
+  color: var(--text-color);
+}
+
+/* .code-copy-btn:active {
+  transform: scale(0.95);
+}
+
+/* Copied state keeps black */
+.code-copy-btn.copied {
+  color: #000000 !important;
+} */
 
 .modal-code h3 {
   font-size: 1rem;
@@ -680,11 +721,39 @@
 
 .modal-code pre {
   margin: 0 0 1rem 0;
-  padding: 1.25rem;
-  background: #1e1e1e;
-  border: 1px solid #2d2d2d;
-  border-radius: 8px;
+  padding: 38px 14px 14px;
+  background: color-mix(in srgb, var(--modal-bg) 92%, black 8%);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
   overflow-x: auto;
+  position: relative;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+/* Light mode specific */
+:root:not(.dark) .modal-code pre {
+  background: #f8fafc;                 
+  border: 1px solid #e5e7eb;
+  box-shadow: inset 0 1px 0 rgba(0,0,0,0.03);
+}
+
+:root:not(.dark) .modal-code code {
+  color: #0f172a; /* dark slate */
+}
+:root:not(.dark) .modal-code .keyword { color: #0369a1; font-weight: 500; }
+:root:not(.dark) .modal-code .component-name { color: #3730a3; font-weight: 600; }
+:root:not(.dark) .modal-code .prop-name { color: #b45309; }
+:root:not(.dark) .modal-code .prop-value { color: #065f46; }
+:root:not(.dark) .modal-code .punctuation { color: #475569; }
+
+/* code copy button in light mode */
+:root:not(.dark) .code-copy-btn {
+  background: rgba(0,0,0,0.04);
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
 }
 
 /* Custom Scrollbar for Code Block */
@@ -732,74 +801,77 @@
 
 /* Syntax Highlighting for Code Block */
 .keyword {
-  color: #c586c0;
+color: #7dd3fc;
   font-weight: 500;
 }
 
 .component-name {
-  color: #4ec9b0;
+color: #a5b4fc;
   font-weight: 600;
 }
 
 .prop-name {
-  color: #9cdcfe;
+  color: #facc15;
 }
 
 .prop-value {
-  color: #ce9178;
+  color: #86efac;
 }
 
 .punctuation {
-  color: #d4d4d4;
+  color: #94a3b8;
 }
 
 .copy-button {
   width: 100%;
-  padding: 0.875rem 1.25rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--primary-text);
-  background: var(--primary-color);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2),
-    0 2px 4px -1px rgba(0, 0, 0, 0.15);
-  position: relative;
+  height: 44px;
+  padding: 0 1.25rem;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1;
+
+  /* always white background as requested */
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+
   overflow: hidden;
-  letter-spacing: 0.025em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.03);
 }
 
-.copy-button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.15),
-    transparent
-  );
-  transition: left 0.5s;
+:root.dark .copy-button {
+  background: #1C2636;
+  border-color: rgba(255,255,255,0.06);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
-
-.copy-button:hover::before {
-  left: 100%;
+:root.dark .copy-button span {
+  color: #ffffff !important;
+  text-shadow: none;
 }
-
-.copy-button:hover {
-  background: var(--primary-hover);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3),
-    0 4px 6px -2px rgba(0, 0, 0, 0.2);
+:root.dark .copy-button svg {
+  color: #ffffff !important;
+  filter: none;
 }
-
-.copy-button:active {
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
-    0 1px 2px -1px rgba(0, 0, 0, 0.15);
+:root.dark .code-copy-btn {
+  background: #1C2636;
+  border-color: rgba(255,255,255,0.06);
+}
+:root:not(.dark) .code-copy-btn.copied {
+  color: #000000 !important;
+}
+:root.dark .code-copy-btn.copied {
+  color: #ffffff !important;
+}
+:root.dark .copy-button.copied {
+  background: #1C2636;
 }
 
 /* Footer Styles */
@@ -1113,4 +1185,29 @@
   font-weight: 500;
   min-width: 120px;
   text-align: center;
+}
+
+  @keyframes modalEnter {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+}
+
+  .modal-code pre::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ff5f56;
+    box-shadow:
+      14px 0 #ffbd2e,
+      28px 0 #27c93f;
 }
