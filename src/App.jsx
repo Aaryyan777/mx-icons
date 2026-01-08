@@ -534,9 +534,6 @@ function App() {
                     </a>
                   </li>
                   <li>
-                    <a href="#">Quick Start</a>
-                  </li>
-                  <li>
                     <a href="https://github.com/ig-imanish/mx-icons">GitHub</a>
                   </li>
                   <li>
@@ -583,12 +580,6 @@ function App() {
                     <a href="https://www.npmjs.com/package/mx-icons">
                       NPM Package
                     </a>
-                  </li>
-                  <li>
-                    <a href="#">Donate</a>
-                  </li>
-                  <li>
-                    <a href="#">Changelog</a>
                   </li>
                 </ul>
               </div>
